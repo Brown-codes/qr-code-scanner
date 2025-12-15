@@ -25,7 +25,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, "/"),
+            onTap: () => Navigator.pushNamed(context, "/create_qr"),
             child: Column(
               children: [
                 Icon(Icons.create, color: Colors.white),

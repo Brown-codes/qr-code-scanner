@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/pages/create_qr_page.dart';
 import 'package:qr_code_scanner/pages/home_page.dart';
+import 'package:qr_code_scanner/pages/qr_result_page.dart';
 import 'package:qr_code_scanner/pages/recent_page.dart';
 import 'package:qr_code_scanner/pages/scan_qr_page.dart';
 import 'package:qr_code_scanner/pages/settings_page.dart';
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
       // home: HomePage(),
       routes: {
         "/" : (context) => HomePage(),
+        "/create_qr" : (context) => CreateQrPage(),
         "/recent" : (context) => RecentPage(),
         "/scan_qr" : (context) => ScanQrPage(),
         "/settings" : (context)  => SettingsPage()
