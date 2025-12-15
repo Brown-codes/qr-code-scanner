@@ -1,0 +1,20 @@
+Container(
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade900,
+          borderRadius: BorderRadius.circular(20)
+        ),
+        child: BottomNavigationBar(
+          elevation: 0,
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.grey.shade900,
+          unselectedItemColor: Colors.grey.shade600,
+          selectedItemColor: Colors.white,
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.create), label: "Create QR"),
+            BottomNavigationBarItem(icon: Icon(Icons.document_scanner_outlined), label: "Scan QR"),
+            BottomNavigationBarItem(icon: Icon(Icons.history), label: "Recent"),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
+          ],
+        ),
+      ),
