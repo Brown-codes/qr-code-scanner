@@ -18,3 +18,11 @@ Container(
           ],
         ),
       ),
+
+      routes: {
+              "/" : (context) => HomePage(),
+              "/create_qr" : (context) => CreateQrPage(),
+              "/recent" : (context) => RecentPage(),
+              "/scan_qr" : (context) => ScanQrPage(),
+              "/settings" : (context)  => SettingsPage()
+            },

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({super.key});
-
-  @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
-}
-
-class _BottomNavBarState extends State<BottomNavBar> {
-  bool isSelected = false;
+class BottomNavBar extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
+  const BottomNavBar({super.key, required this.currentIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +11,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       margin: EdgeInsets.only(bottom: 20, right: 16, left: 16),
       padding: EdgeInsets.all(16),
       width: double.infinity,
-      height: 80,
+      height: 90,
       decoration: BoxDecoration(
         color: Colors.grey.shade900,
         borderRadius: BorderRadius.circular(20),
@@ -24,49 +19,32 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, "/create_qr"),
-            child: Column(
-              children: [
-                Icon(Icons.create, color: Colors.white),
-                SizedBox(height: 5),
-                Text("Create QR", style: TextStyle(color: Colors.white)),
-              ],
-            ),
+          _buildNavItem(Icons.create, "Create", 0),
+          _buildNavItem(Icons.document_scanner, "Scan", 1),
+          _buildNavItem(Icons.history, "Recent", 2),
+          _buildNavItem(Icons.settings, "Settings", 3),
+        ],
+      ),
+    );
+  }
+  Widget _buildNavItem(IconData icon, String label, int index) {
+    final isSelected = currentIndex == index;
+    return GestureDetector(
+      onTap: () => onTap(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            color: isSelected ? Colors.blueAccent : Colors.white, // Highlight active tab
+            size: 28,
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isSelected = !isSelected;
-                Navigator.pushNamed(context, "/scan_qr");
-              });
-            },
-            child: Column(
-              children: [
-                Icon(Icons.document_scanner, color: isSelected? Colors.grey.shade600 :Colors.white),
-                SizedBox(height: 5),
-                Text("Scan QR", style: TextStyle(color: Colors.white)),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, "/recent"),
-            child: Column(
-              children: [
-                Icon(Icons.history, color: Colors.white),
-                SizedBox(height: 5),
-                Text("Recent", style: TextStyle(color: Colors.white)),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () => Navigator.pushNamed(context, "/settings"),
-            child: Column(
-              children: [
-                Icon(Icons.settings, color: Colors.white),
-                SizedBox(height: 5),
-                Text("Settings", style: TextStyle(color: Colors.white)),
-              ],
+          const SizedBox(height: 5),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? Colors.blueAccent : Colors.white,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ],
