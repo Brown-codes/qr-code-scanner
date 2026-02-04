@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
-
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -37,16 +36,15 @@ class _QrResultPageState extends State<QrResultPage> {
         final recorder = ui.PictureRecorder();
         final canvas = Canvas(recorder);
 
-        //the white background
         final paint = Paint()..color = Colors.white;
         canvas.drawRect(const Rect.fromLTWH(0, 0, size, size), paint);
 
         final painter = QrPainter.withQr(
           qr: qrCode,
-          dataModuleStyle: QrDataModuleStyle(color: Colors.black),
+          dataModuleStyle: const QrDataModuleStyle(color: Colors.black),
           gapless: true,
         );
-        painter.paint(canvas, Size(size, size));
+        painter.paint(canvas, const Size(size, size));
 
         final picture = recorder.endRecording();
         final img = await picture.toImage(size.toInt(), size.toInt());
@@ -55,14 +53,14 @@ class _QrResultPageState extends State<QrResultPage> {
         if (byteData != null) {
           final Uint8List pngBytes = byteData.buffer.asUint8List();
 
-          // 7. Save
           await Gal.putImageBytes(pngBytes);
 
           if (context.mounted) {
             showDialog(
               context: context,
-              builder: (context) =>
-                  AlertDialog(content: Text("Saved to Gallery!")),
+              builder: (context) => const AlertDialog(
+                content: Text("Saved to Gallery!"),
+              ),
             );
           }
         }
@@ -71,7 +69,9 @@ class _QrResultPageState extends State<QrResultPage> {
       if (context.mounted) {
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(content: Text("Error Saving $e")),
+          builder: (context) => AlertDialog(
+            content: Text("Error Saving: $e"),
+          ),
         );
       }
     }
@@ -91,16 +91,15 @@ class _QrResultPageState extends State<QrResultPage> {
         final recorder = ui.PictureRecorder();
         final canvas = Canvas(recorder);
 
-        //the white background
         final paint = Paint()..color = Colors.white;
         canvas.drawRect(const Rect.fromLTWH(0, 0, size, size), paint);
 
         final painter = QrPainter.withQr(
           qr: qrCode,
-          dataModuleStyle: QrDataModuleStyle(color: Colors.black),
+          dataModuleStyle: const QrDataModuleStyle(color: Colors.black),
           gapless: true,
         );
-        painter.paint(canvas, Size(size, size));
+        painter.paint(canvas, const Size(size, size));
 
         final picture = recorder.endRecording();
         final img = await picture.toImage(size.toInt(), size.toInt());
@@ -109,7 +108,6 @@ class _QrResultPageState extends State<QrResultPage> {
         if (byteData != null) {
           final Uint8List pngBytes = byteData.buffer.asUint8List();
 
-          // 7. Save
           final directory = await getTemporaryDirectory();
           final path = '${directory.path}/qr_share.png';
           final file = File(path);
@@ -118,7 +116,7 @@ class _QrResultPageState extends State<QrResultPage> {
           await SharePlus.instance.share(
             ShareParams(
               files: [XFile(path)],
-              text: 'Here is my QR code for $widget.type!',
+              text: 'Here is my QR code for ${widget.type}!',
             ),
           );
         }
@@ -127,7 +125,9 @@ class _QrResultPageState extends State<QrResultPage> {
       if (context.mounted) {
         showDialog(
           context: context,
-          builder: (context) => AlertDialog(content: Text("Error Sharing $e")),
+          builder: (context) => AlertDialog(
+            content: Text("Error Sharing: $e"),
+          ),
         );
       }
     }
@@ -136,19 +136,19 @@ class _QrResultPageState extends State<QrResultPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("result ")),
+      appBar: AppBar(title: const Text("Result")),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                margin: EdgeInsets.all(40),
-                padding: EdgeInsets.all(25),
+                margin: const EdgeInsets.all(40),
+                padding: const EdgeInsets.all(25),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 10,
@@ -164,19 +164,23 @@ class _QrResultPageState extends State<QrResultPage> {
                       version: QrVersions.auto,
                       size: 200.0,
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "Here is your code",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
                     ),
-                    Text(
-                      "This your unique QR code",
-                      style: TextStyle(fontWeight: FontWeight.w500),
+                    const Text(
+                      "This is your unique QR code",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black54,
+                      ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -199,22 +203,27 @@ class _QrResultPageState extends State<QrResultPage> {
       ),
     );
   }
-}
 
-Widget _actionButton(IconData icon, String title) {
-  return Column(
-    children: [
-      Container(
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.blue.shade50,
-          borderRadius: BorderRadius.circular(16),
+  Widget _actionButton(IconData icon, String title) {
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.blue.shade50,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Icon(icon, color: Colors.blue),
         ),
-        child: Icon(icon),
-      ),
-
-      SizedBox(height: 10),
-      Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-    ],
-  );
+        const SizedBox(height: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
 }

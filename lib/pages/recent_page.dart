@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../services/history_service.dart';
 
 class RecentPage extends StatefulWidget {
@@ -30,19 +29,19 @@ class _RecentPageState extends State<RecentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Recent scans"),
+        title: const Text("Recent scans"),
         actions: [
           IconButton(
             onPressed: () async {
               await HistoryService.clearHistory();
               _loadHistory();
             },
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
           ),
         ],
       ),
       body: _history.isEmpty
-          ? Center(
+          ? const Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -59,24 +58,19 @@ class _RecentPageState extends State<RecentPage> {
 
                 return Dismissible(
                   key: Key(code),
-
                   direction: DismissDirection.endToStart,
-
                   background: Container(
                     color: Colors.red,
                     alignment: Alignment.centerRight,
                     padding: const EdgeInsets.only(right: 20),
                     child: const Icon(Icons.delete, color: Colors.white),
                   ),
-
                   onDismissed: (direction) async {
                     await HistoryService.deleteItem(code);
-
                     setState(() {
                       _history.removeAt(index);
                     });
 
-                    // 3. Show confirmation
                     if (context.mounted) {
                       showDialog(
                         context: context,
@@ -87,29 +81,15 @@ class _RecentPageState extends State<RecentPage> {
                               onPressed: () async {
                                 await HistoryService.addToHistory(code);
                                 _loadHistory();
+                                if (context.mounted) Navigator.pop(context);
                               },
-                              child: Text("Undo"),
+                              child: const Text("Undo"),
                             ),
                           ],
                         ),
                       );
                     }
-                    // ScaffoldMessenger.of(context).showSnackBar(
-                    //   SnackBar(
-                    //     content: Text("Deleted: $code"),
-                    //     action: SnackBarAction(
-                    //       label: "UNDO",
-                    //       onPressed: () async {
-                    //         // Optional: Add it back if they click Undo
-                    //         await HistoryService.addToHistory(code);
-                    //         _loadHistory();
-                    //       },
-                    //     ),
-                    //   ),
-                    // );
                   },
-
-                  // The actual card you see
                   child: Card(
                     margin: const EdgeInsets.symmetric(
                       horizontal: 16,

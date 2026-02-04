@@ -8,8 +8,8 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20, right: 16, left: 16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 20, right: 16, left: 16),
+      padding: const EdgeInsets.all(16),
       width: double.infinity,
       height: 90,
       decoration: BoxDecoration(
@@ -27,6 +27,7 @@ class BottomNavBar extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildNavItem(IconData icon, String label, int index) {
     final isSelected = currentIndex == index;
     return GestureDetector(
@@ -36,7 +37,7 @@ class BottomNavBar extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: isSelected ? Colors.blueAccent : Colors.white, // Highlight active tab
+            color: isSelected ? Colors.blueAccent : Colors.white,
             size: 28,
           ),
           const SizedBox(height: 5),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // For HapticFeedback
+import 'package:flutter/services.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../services/history_service.dart';
@@ -23,7 +23,6 @@ class _ScanQrPageState extends State<ScanQrPage> {
   }
 
   void _handleScan(BarcodeCapture capture) async {
-
     if (_isScanning) return;
 
     final List<Barcode> barcodes = capture.barcodes;
@@ -35,15 +34,12 @@ class _ScanQrPageState extends State<ScanQrPage> {
 
     final String code = barcodes.first.rawValue!;
 
-
     await HistoryService.addToHistory(code);
-
 
     final shouldVibrate = await SettingsService.getVibrate();
     if (shouldVibrate) {
       HapticFeedback.vibrate();
     }
-
 
     final shouldAutoOpen = await SettingsService.getAutoOpen();
 
@@ -54,7 +50,6 @@ class _ScanQrPageState extends State<ScanQrPage> {
       if (await canLaunchUrl(uri)) {
         await launchUrl(uri, mode: LaunchMode.externalApplication);
 
-        // Reset scanning after a short delay
         Future.delayed(const Duration(seconds: 2), () {
           if (mounted) setState(() => _isScanning = false);
         });
@@ -62,8 +57,6 @@ class _ScanQrPageState extends State<ScanQrPage> {
       }
     }
 
-    // 6. Default Behavior (Show Dialog)
-    // If we didn't auto-open, show the popup
     if (mounted) {
       showDialog(
         context: context,
@@ -73,8 +66,8 @@ class _ScanQrPageState extends State<ScanQrPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
-                setState(() => _isScanning = false); // Resume scanning
+                Navigator.pop(context);
+                setState(() => _isScanning = false);
               },
               child: const Text("OK"),
             ),
@@ -90,7 +83,6 @@ class _ScanQrPageState extends State<ScanQrPage> {
           ],
         ),
       ).then((_) {
-        // Just in case they click outside the box to close it
         setState(() => _isScanning = false);
       });
     }

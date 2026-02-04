@@ -19,7 +19,7 @@ class _QrInputPageState extends State<QrInputPage> {
       showDialog(
         context: context,
         builder: (context) =>
-            AlertDialog(content: Text("Please enter some data!")),
+            const AlertDialog(content: Text("Please enter some data!")),
       );
       return;
     }
@@ -31,15 +31,19 @@ class _QrInputPageState extends State<QrInputPage> {
       ),
     );
   }
+
   @override
   void dispose() {
-   _textEditingController.dispose();
+    _textEditingController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Create ${widget.type} QR Code"),
+      ),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -48,10 +52,11 @@ class _QrInputPageState extends State<QrInputPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "What should this QR code say?",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "Enter the ${widget.type.toLowerCase()} you want to embed in the QR code.",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
                   controller: _textEditingController,
                   decoration: InputDecoration(
@@ -61,17 +66,16 @@ class _QrInputPageState extends State<QrInputPage> {
                     ),
                   ),
                 ),
-
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () => generateQRCode(),
                   child: Container(
-                    padding: EdgeInsets.all(24),
+                    padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.grey.shade900,
+                      color: Colors.blueAccent,
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "Generate",
                         style: TextStyle(

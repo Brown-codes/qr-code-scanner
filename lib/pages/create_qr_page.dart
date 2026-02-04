@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/components/create_qr_list_tile.dart';
 import 'package:qr_code_scanner/pages/qr_input_page.dart';
-import 'package:qr_code_scanner/pages/qr_result_page.dart';
 
 class CreateQrPage extends StatelessWidget {
   const CreateQrPage({super.key});
@@ -9,16 +8,16 @@ class CreateQrPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Qr Code")),
+      appBar: AppBar(title: const Text("Create QR Code")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           children: [
             CreateQrListTile(
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => QrInputPage(type: "Website")
+                  builder: (context) => const QrInputPage(type: "Website"),
                 ),
               ),
               icon: Icons.web,
@@ -28,7 +27,7 @@ class CreateQrPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => QrInputPage(type: "Text")
+                  builder: (context) => const QrInputPage(type: "Text"),
                 ),
               ),
               icon: Icons.text_snippet_sharp,
@@ -38,7 +37,7 @@ class CreateQrPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => QrInputPage(type: "Email")
+                  builder: (context) => const QrInputPage(type: "Email"),
                 ),
               ),
               icon: Icons.email,
@@ -48,7 +47,7 @@ class CreateQrPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => QrInputPage(type: "Email")
+                  builder: (context) => const QrInputPage(type: "SMS"),
                 ),
               ),
               icon: Icons.chat,
@@ -58,7 +57,7 @@ class CreateQrPage extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => QrInputPage(type: "Wifi")
+                  builder: (context) => const QrInputPage(type: "Wifi"),
                 ),
               ),
               icon: Icons.wifi,

@@ -14,7 +14,7 @@ class CreateQrListTile extends StatelessWidget {
         elevation: 1.5,
         child: ListTile(
           leading: Container(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.blue.shade50,
               borderRadius: BorderRadius.circular(8),
@@ -23,9 +23,9 @@ class CreateQrListTile extends StatelessWidget {
           ),
           title: Text(
             title!,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20),
+          trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 20),
         ),
       ),
     );
